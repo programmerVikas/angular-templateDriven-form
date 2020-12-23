@@ -1,0 +1,136 @@
+<div class="main">
+    <div class="box card">
+
+        <div class="card-header text-center">
+            <h3>User Form</h3>
+        </div>
+
+        <form class="p-5" #myForm="ngForm" (ngSubmit)="onSubmit(myForm.value)">
+
+            <div class="form-group ">
+                <label for="inputusername">Username</label>
+                <input type="text" class="form-control" placeholder="username" name="uname" ngModel required #uname="ngModel">
+                <span *ngIf="uname.invalid && (uname.dirty || uname.touched)" class="error text-warning">&#x2613; please fill this field correctly..</span>
+            </div>
+            <div class="form-group">
+                <label for="inputpassword">Password</label>
+                <input minlength="5" type="password" class="form-control" placeholder="password" name="pass" ngModel required #pass1="ngModel">
+                <span *ngIf="pass1.invalid && pass1.touched" class="error text-warning">&#x2613; please fill this field correctly..</span>
+            </div>
+            <div class="form-group">
+                <label for="inputEmail4">Email</label>
+                <input email type="email" class="form-control" placeholder="email" name="mail" ngModel required #email="ngModel">
+                <span *ngIf="email.invalid && email.touched" class="error text-warning">&#x2613; please fill this field correctly..</span>
+            </div>
+            <div class="form-group">
+                <label for="inputEmail4">Mobile no.</label>
+                <input pattern="[0-9]*" type="text" class="form-control" minlength="10" maxlength="12" placeholder="mobile number" name="phone" ngModel required #phone="ngModel">
+                <span *ngIf="phone.invalid && phone.touched" class="error text-warning">&#x2613; please fill this field correctly..</span>
+            </div>
+            <div class="form-group">
+                <label for="inputEmail4">Address</label>
+                <input pattern="[a-zA-Z0-9 ]*" type="text" class="form-control" minlength="5" placeholder="Address" name="address" ngModel required #add="ngModel">
+                <span *ngIf="add.invalid && add.touched" class="error text-warning">&#x2613; please fill this field correctly..</span>
+            </div>
+
+            <div class="form-group">
+                <label for="inputEmail4">select course</label>
+                <select name="course" id="" required class="form-control" [ngModel]="mydefaultCourse" #crs="ngModel">
+                    <option value="java">Java</option>
+                    <option value="html">Html</option>
+                    <option value="c++">C++</option>
+                    <option value="python">Python</option>
+                </select>
+                <span class="text-warning" *ngIf="crs.invalid && crs.touched">select course</span>
+            </div>
+
+            <!-- here we are use [ngModel]="mydefaultCourse" for default select option ,
+                and  mydefaultCourse value given in .ts file ,you also use default value in in simple input box 
+            like this :
+             <input type="text" class="form-control" placeholder="username" name="uname" [ngModel]="mydefaultCourse" required #uname="ngModel">
+            -->
+
+            <div class="form-group ">
+                <label for="inputusername">To way DataBinding</label>
+                <textarea placeholder="write something" name="work" [(ngModel)]="liveType" required #wor="ngModel" class="form-control" aria-label="With textarea"></textarea>
+                <span *ngIf="wor.invalid && (wor.dirty || wor.touched)" class="error text-warning">&#x2613; please fill this field correctly..</span>
+                <span class="text-primary" *ngIf="liveType">your work : {{liveType}}</span>
+            </div>
+            <!-- here when we type anything in this field then in second span data automatic write 
+            so here use this 
+            [(ngModel)]="liveType" here liveType variable in .ts file like this: liveType="";
+            and in second span :  <span class="text-primary" *ngIf="liveType">your work : {{liveType}}</span>
+            -->
+
+
+            <!-- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ -->
+            <!-- here we will use ngModelGroup for particular group details in form -->
+            <div class="card">
+                <div class="card-header">Address</div>
+                <div class="card-body" ngModelGroup="addressDetails" #details="ngModelGroup">
+                    <div class="form-group">
+                        <label for="inputEmail4">village</label>
+                        <input pattern="[a-zA-Z0-9 ]*" type="text" class="form-control" minlength="3" placeholder="village" name="village" ngModel required #vill="ngModel">
+
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail4">City</label>
+                        <input pattern="[a-zA-Z0-9 ]*" type="text" class="form-control" minlength="3" placeholder="city" name="city" ngModel required #cit="ngModel">
+
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail4">State</label>
+                        <input pattern="[a-zA-Z0-9 ]*" type="text" class="form-control" minlength="3" placeholder="state" name="state" ngModel required #stat="ngModel">
+
+                    </div>
+                </div>
+                <span *ngIf="details.invalid && details.touched" class="error text-warning">
+                    &#x2613; please fill this field correctly..
+                </span>
+            </div>
+
+            <!-- here
+                 ngModelGroup="addressDetails" #details="ngModelGroup" 
+                 used for grouping
+                -->
+            <!-- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ -->
+
+
+
+            <div class="form-group mt-3">
+                <div class="custom-control custom-radio" *ngFor="let item of gender">
+                    <input type="radio" id="{{item.id}}" name="gender" class="custom-control-input" [ngModel]="defaultGender" value="{{item.value}}">
+                    <label class="custom-control-label" for="{{item.id}}">{{item.value}}</label>
+                </div>
+            </div>
+
+
+            <button class="btn btn-primary " [disabled]="myForm.invalid">login</button>
+
+        </form>
+
+    </div>
+
+
+
+</div>
+
+<div class="main">
+    <div class="card box2">
+        <div class="card-header">Your Details.....</div>
+        <div class="card-body">
+            <p>Name : <strong>{{user.uname}}</strong></p>
+            <p>Password : <strong>{{user.pass}}</strong></p>
+            <p>Gender : <strong>{{user.gender}}</strong></p>
+            <p>@Email : <strong>{{user.mail}}</strong></p>
+            <p>Mobile no. : <strong>{{user.phone}}</strong></p>
+            <p>Address : <strong>{{user.address}}</strong></p>
+            <p>Course : <strong>{{user.course}}</strong></p>
+            <p>Village : <strong>{{user.addressDetails.village}}</strong></p>
+            <p>City : <strong>{{user.addressDetails.city}}</strong></p>
+            <p>State : <strong>{{user.addressDetails.state}}</strong></p>
+            <p>work : <strong>{{user.work}}</strong></p>
+        </div>
+    </div>
+
+</div>
