@@ -1,5 +1,5 @@
 # view form 
-  https://programmervikas.github.io/angular-templateDriven-form/.
+ https://programmervikas.github.io/angular-templateDriven-form/
 
 # FormApp
 
